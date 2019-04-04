@@ -57,6 +57,12 @@ public class UserCommandProcessor implements IInfiniteLoopProcessor, IUserComman
                 String aa = userInputReader.nextLine();
                 System.out.println(aa);
                 System.out.println(BirdStore.of().searchByLivingArea(aa).toString());
+                break;
+            case "exit":
+                System.exit(0);
+            default:
+                System.out.println("Unknown command");
+                break;
         }
     }
 
