@@ -26,4 +26,6 @@ public abstract class AbstractBirdStore {
      * @return все объекты у которых livingArea = livingAreaToFind
      */
     public abstract List searchByLivingArea(String livingAreaToFind);
+
+    public abstract void deleteBird(Bird b);
 }
