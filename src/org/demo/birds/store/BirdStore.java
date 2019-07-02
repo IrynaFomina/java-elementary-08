@@ -3,6 +3,7 @@ package org.demo.birds.store;
 import org.demo.birds.entities.Bird;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Отнаследоваться от AbstractBirdStore.
@@ -11,12 +12,12 @@ import java.util.*;
  */
 public class BirdStore extends AbstractBirdStore {
     private static final BirdStore birdStore = new BirdStore();
-    private Map<String, Bird> listNames;
-    private Map<String, List<Bird>> listLivingAreas;
+    private ConcurrentHashMap<String, Bird> listNames;
+    private ConcurrentHashMap<String, List<Bird>> listLivingAreas;
 
     private BirdStore() {
-        listNames = new HashMap<>();
-        listLivingAreas = new HashMap<>();
+        listNames = new ConcurrentHashMap<>();
+        listLivingAreas = new ConcurrentHashMap<>();
     }
 
     public static BirdStore of() {
@@ -25,7 +26,7 @@ public class BirdStore extends AbstractBirdStore {
 
     @Override
     public String toString() {
-        final StringBuffer sb = new StringBuffer("BirdStore{");
+        final StringBuilder sb = new StringBuilder("BirdStore{");
         sb.append("listNames=").append(listNames);
         sb.append(", listLivingAreas=").append(listLivingAreas);
         sb.append('}');
@@ -33,11 +34,11 @@ public class BirdStore extends AbstractBirdStore {
     }
 
     @Override
-    public synchronized void addBird(Bird b) {
+    public void addBird(Bird b) {
         if (!listNames.containsKey(b.getName())) {
             listNames.put(b.getName(), b);
         } else {
-            System.out.println("Bird with name " + b.getName() + "is already exist");
+            System.out.println("Bird with name " + b.getName() + " is already exist");
             return;
         }
         List<Bird> list;
@@ -69,9 +70,9 @@ public class BirdStore extends AbstractBirdStore {
     }
 
     @Override
-    public synchronized void deleteBird(Bird b) {
+    public void deleteBird(Bird b) {
         if (!listNames.remove(b.getName(),b)) {
-            System.out.println("Bird with name " + b.getLivingArea()+ "do not exist");
+            System.out.println("Bird with name " + b.getName()+ " do not exist");
             return;
         }
         listLivingAreas.get(b.getLivingArea()).remove(b);

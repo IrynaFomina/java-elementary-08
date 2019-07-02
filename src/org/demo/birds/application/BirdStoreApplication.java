@@ -10,8 +10,13 @@ public class BirdStoreApplication {
     public static void main(String[] args) {
 //         IInfiniteLoopProcessor userCommandProcessor = new UserCommandProcessor(); //создать реальный объект
 //         userCommandProcessor.processInLoop();
-         NewBird newBird = new NewBird();
-         newBird.start();
+//         NewBird newBird = new NewBird();
+         int i =0;
+         while (i < 200) {
+             new NewBird().start();
+             new RemoveBird().start();
+             i++;
+         }
         NewBird1 newBird2 = new NewBird1();
         newBird2.start();
         RemoveBird removeBird = new RemoveBird();
@@ -25,11 +30,11 @@ class NewBird extends Thread{
         Bird bird = new Bird("aa", "qwe", 2d);
         BirdStore birdStore = BirdStore.of();
         birdStore.addBird(bird);
-        try {
-            sleep(5*1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+//        try {
+////            sleep(5*1000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
         System.out.println(currentThread().getName() + " : " + birdStore.toString());
     }
 }
